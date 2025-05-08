@@ -1,0 +1,14 @@
+Anotações Docker.
+Dia 01:
+	O que são contêineres? Não são VMs.
+Os contêineres são sinônimos de ISOLAMENTO. Isto é, podemos isolar um contêiner e seus processos próprios  de forma que ele não consiga ser acessado por outro contêiner. Dessa forma, não temos conflitos.
+
+	Conseguimos, também, limitar / especificar quais recursos este contêiner específico vai poder acessar. 
+
+Temos dois tipos de isolamento:
+- Isolamento lógico: Parte dos “softwares”, isto é, parte não hardware. “Rede, usuário, processos e etc”
+- Isolamento físico: Parte dos hardware. Memória, CPU e etc. “CPU, memória, disco e etc”
+
+ Então, de forma resumida, CONTEINERES são nada mais nada menos que uma forma de isolar nossos recursos.
+
+Docker não é um contêiner. Ele apenas é uma ferramenta que auxilia na manipulação dos contêineres.
