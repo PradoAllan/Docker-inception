@@ -1,0 +1,10 @@
+Passo a passo para fazer a INCEPTION:
+
+1- Criar uma VM com a última stable version do Debian.
+2- Colocar seu user como sudo (podemos fazer tudo como root).
+3- Instalar o docker na VM (seguir documentação para instalar).
+    -> docker --version para garantir que instalou corretamente
+    -> Coloque seu user dentro do grupo docker:
+    sudo usermod -aG docker <user>
+    -> Dessa forma, fica mais facil de manipular os CONTEINERES
+

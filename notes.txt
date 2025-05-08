@@ -1,2 +1,109 @@
 # This is my study notes from a 42 project called Inception.
 
+AULA 01:
+	O que são contêineres? Não são VMs.
+        Os contêineres são sinônimos de ISOLAMENTO. 
+        Isto é, podemos isolar um contêiner e seus processos 
+        próprios  de forma que ele não consiga ser acessado 
+        por outro contêiner. Dessa forma, não temos conflitos.
+
+	Conseguimos, também, limitar / especificar quais recursos 
+    este contêiner específico vai poder acessar. 
+
+    Temos dois tipos de isolamento:
+    - Isolamento lógico: Parte dos “softwares”, 
+            isto é, parte não hardware. “Rede, usuário, 
+            processos e etc”
+
+    - Isolamento físico: Parte dos hardware. 
+            Memória, CPU e etc. “CPU, memória, disco e etc”
+
+    Então, de forma resumida, CONTEINERES são nada mais 
+    nada menos que uma forma de isolar nossos recursos.
+
+    Docker não é um contêiner. Ele apenas é uma ferramenta 
+    que auxilia na manipulação dos contêineres.
+
+=======================================================================================
+=======================================================================================
+
+AULA 02: 
+    Imagens de container: É, basicamente uma cópia de um serviço
+    para nosso container. 
+
+    Copy on write: 
+
+    Ainda não entendi muito bem como funciona esses conceitos.
+
+=======================================================================================
+=======================================================================================
+
+AULA 03:
+    Os CONTEINERES compartilham o mesmo kernel linux. Isto
+    é, eles compartilham o mesmo SO do host.
+
+    Então é como se pegássemos um pc e isolarmos diversas
+    pequenas partes desse pc para rodarmos serviços
+    diferentes usando o mesmo kernel linux do host.
+
+    Totalmente diferente da forma como as VMs funcionam.
+    As VMs possuem um SO que roda em cima de outro SO,
+    do host, que através de um hipervisor, gerencia o
+    compartilhamento de recursos para ambos.
+    
+    BASICAMENTE: Quando temos um CONTEINER ele não possue
+    um SO com um kernel próprio em execução. Ele usa o 
+    kernel do próprio host, isto é, do servidor linux.
+
+NETFILTER / IPTABLE:
+    São os responsáveis para gerenciar e redirecionar
+    os acessos de fora para os respectivos CONTEINERES
+    que estão rodando o serviço.
+
+NAMESPACES: ??
+
+=======================================================================================
+=======================================================================================
+
+AULA 04 / 05:
+    Primeiro precisamos ter um VM para conseguir instalar
+    tudo que o docker precisa. Estou usando uma VM com
+    o Debian.
+
+    Logo em seguida, precisamos instalar o docker em si.
+    Link para documentação: https://docs.docker.com/engine/install/
+    Nesse link, basta selecionar o SO que você deseja e 
+    seguir os passos para instalar.
+
+    Comando usado pelo LinuxTips: *NAO FIZ ASSIM*
+    curl -fsSL https://get.docker.com | bash
+
+    Caso queiramos usar o Docker ser estarmos no root, podemos
+    adicionar o nosso user no grupo docker com o seguinte 
+    comando:
+    sudo usermod -aG docker <seu_user>
+
+=======================================================================================
+=======================================================================================
+
+"De maneira resumida, o docker funciona da seguinte forma: 
+quando rodamos o docker container run -ti hello-world, 
+o Docker client fala pro Docker daemon começar os trabalhos.
+Em seguida o Docker daemon baixa a imagem do hello-world, 
+caso ela não exista no host, ou executa ela, caso ela já
+exista no host.
+Então, o Docker daemon cria um novo container a partir da
+imagem que do hello-world. "
+
+AULA 06:
+    Comando usado para ver quais CONTEINERES estão rodando:
+        docker ps
+            -> Versão antiga do comando
+        docker container ls
+            -> Versão nova do comando
+    
+    Comando para fazer um hello world no docker:
+        docker container run -ti hello-world
+
+    Comando para ver quais containers foram executados:
+        docker container ls -a
