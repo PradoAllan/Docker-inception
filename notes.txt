@@ -76,12 +76,12 @@ AULA 04 / 05:
     seguir os passos para instalar.
 
     Comando usado pelo LinuxTips: *NAO FIZ ASSIM*
-    curl -fsSL https://get.docker.com | bash
+    @@ curl -fsSL https://get.docker.com | bash
 
     Caso queiramos usar o Docker ser estarmos no root, podemos
     adicionar o nosso user no grupo docker com o seguinte 
     comando:
-    sudo usermod -aG docker <seu_user>
+    @@ sudo usermod -aG docker <seu_user>
 
 =======================================================================================
 =======================================================================================
@@ -93,17 +93,85 @@ Em seguida o Docker daemon baixa a imagem do hello-world,
 caso ela não exista no host, ou executa ela, caso ela já
 exista no host.
 Então, o Docker daemon cria um novo container a partir da
-imagem que do hello-world. "
+imagem que do hello-world. 
+O DOCKER CLIENT SE COMUNICA COM O DOCKER DEAMON..."
 
 AULA 06:
     Comando usado para ver quais CONTEINERES estão rodando:
-        docker ps
+       @@  docker ps
             -> Versão antiga do comando
-        docker container ls
+       @@  docker container ls
             -> Versão nova do comando
     
     Comando para fazer um hello world no docker:
-        docker container run -ti hello-world
+        @@ docker container run -ti hello-world
+        -> A flag -ti indica que vou querer ter um terminal
+        para que eu possa ter uma interatividade com esse 
+        container que vai ser executado. 
+            Então, quando esse container subir, eu já vou
+        estar conectado à ele.
 
-    Comando para ver quais containers foram executados:
-        docker container ls -a
+    Comando para ver quais containers estão em execução
+    e os que foram executados:
+        @@ docker container ls -a
+
+    Comando para teste:
+        @@ docker container run -ti ubuntu
+        -> Nesse caso, vamos rodar um container com uma
+        imagem do ubuntu latest.
+        -> Assim que rodarmos o comando, teremos acesso
+        a esse container pelo terminal.
+        -> Apretando ctrl+D, matamos o ENTRYPOINT do
+        container.
+        -> Quando matamos o ENTRYPOINT, o ubuntu entende que,
+        não existindo um ENTRYPOINT para o container, pode
+        matar o container.
+
+    ENTRYPOINT:
+        É o principal processo do container.
+
+    Para sairmos do terminal do container, isto é, do ENTRYPOINT
+    do container, digitamos o seguinte comando:
+       @@ ctrl+P+Q
+        -> Esse comando vai fazer com que saiamos do 
+        ENTRYPOINT do container mas não mate o container
+        em execução.
+        -> Então, se executarmos o comando,
+        docker container ls
+        Veremos que o container ainda estará em execução.
+
+    Para acessarmos o ENTRYPOINT do container em execução usamos
+    o comando: 
+        @@ docker container attach <id_container> OU <nome_container>
+        
+    Comando para teste:
+        @@ docker container run -ti nginx
+        -> Caso não tenhamos uma imagem do NGINX ele vai baixar.
+        -> Se já tivermos uma imagem do NGINX, ele só vai executa-la.
+        OBS: O container do NGINX não possui um ENTRYPOINT bash.
+            Só conseguimos acessa-lo através do seu processo
+            TODO PROCESSO QUE ESTÁ EM EXECUÇÃO DENTRO DE UM CONTEINER
+            ELE PRECISA ESTAR EM FOREGROUND, ISTO É, EM PRIMEIRO PLANO!
+
+        @@ docker container run -d nginx
+        -> Nesse caso, estamos indicando que o container com a
+        imagem do nginx vai ser executada como deamon.
+        -> Porém, ainda assim, não conseguimos ter acesso ao ENTRYPOINT
+        bash dele. Pois o nginx não tem.
+
+        Em casos assim, temos que usar um comando EXEC.
+        @@ docker container exec -ti <id_container> <comando>
+        -> O exec -ti vai executar um comando via terminal dentro do
+        processo do container escolhido...
+        OBS: Por isso que, no labs, precisavamos usar aquele comando
+        gigantesco "docker compose exec api poetry run ..."
+            -> pois o container que estava rodando nossa aplicação
+            não tinha um ENTRYPOINT bash para acessarmos ele.
+
+    O QUE É RODAR ALGO COMO DEAMON? USANDO A FLAG -d
+        É fazer com que algo não rode no foreground, isto é, em primeiro
+        plano.
+        Geralmente todos os nossos containeres serão executados
+        usando a flag -d. Pois eles não terão necessidade de um ENTRYPOINT
+        bash. Dessa forma, não travando o nosso terminal.
+
