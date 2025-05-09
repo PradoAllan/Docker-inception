@@ -221,3 +221,49 @@ AULA 07:
 =======================================================================================
 =======================================================================================
 
+AULA 08:
+    Para visualizarmos as estatísticas do container em execução, usamos
+    o seguinte comando:
+        @@ docker container stats <id_container> OU <nome_container>
+            -> Ele vai nos informar sobre os recursos que nosso container
+            está utilizando. Isto é, CPU, memória, I/O de rede e disco
+            e etc.
+    
+    Podemos ver quais são os processos sendo executados dentro do nosso
+    container usando o seguinte comando:
+        @@ docker container top <id_container> OU <nome_container>
+            -> Traz as informações de todos os processos que estão em 
+            execução dentro do container.
+    
+    Podemos usar, depois de instalarmos, um comando chamado stress. Ele
+    pode ser usado para estressar nossos containeres com a finalidade de
+    testa-los.
+        @@ stress *VER DEPOIS*
+            -> executar "docker container exec -ti <id_container> bash"
+            -> executar "apt-get update && apt-get install -y stress"
+
+    FLAG -m ao rodar uma imagem de NGINX:
+        @@ docker container run -d -m 128M nginx
+            -> A flag -m é de --memory, que serve para indicar a quantidade
+            de memória que este container vai utilizar.
+    FLAG --cpus ao rodar uma imagem de NGINX:
+        @@ docker container run -d --cpus 0.5 nginx
+            -> A flag --cpus indica quanto de CPU no máximo vamos destinar
+            a este container específico.
+
+    Para darmos update em um container em execução, usamos o seguinte
+    comando:
+        @@ docker container update --cpus 0.2 <id_container>
+            -> A ideia aqui é atualizar recursos do nosso container
+            especifico. No caso do exemplo, estamos reduzindo o 
+            consumo de CPU do container X.
+            -> Podemos usar outras FLAGS para indicar que recurso
+            queremos atualizar. -m para memory e etc...
+
+=======================================================================================
+=======================================================================================
+
+
+
+=======================================================================================
+=======================================================================================
