@@ -76,12 +76,12 @@ AULA 04 / 05:
     seguir os passos para instalar.
 
     Comando usado pelo LinuxTips: *NAO FIZ ASSIM*
-    @@ curl -fsSL https://get.docker.com | bash
+        @@ curl -fsSL https://get.docker.com | bash
 
     Caso queiramos usar o Docker ser estarmos no root, podemos
     adicionar o nosso user no grupo docker com o seguinte 
     comando:
-    @@ sudo usermod -aG docker <seu_user>
+        @@ sudo usermod -aG docker <seu_user>
 
 =======================================================================================
 =======================================================================================
@@ -105,11 +105,11 @@ AULA 06:
     
     Comando para fazer um hello world no docker:
         @@ docker container run -ti hello-world
-        -> A flag -ti indica que vou querer ter um terminal
-        para que eu possa ter uma interatividade com esse 
-        container que vai ser executado. 
-            Então, quando esse container subir, eu já vou
-        estar conectado à ele.
+            -> A flag -ti indica que vou querer ter um terminal
+            para que eu possa ter uma interatividade com esse 
+            container que vai ser executado. 
+                Então, quando esse container subir, eu já vou
+            estar conectado à ele.
 
     Comando para ver quais containers estão em execução
     e os que foram executados:
@@ -117,15 +117,15 @@ AULA 06:
 
     Comando para teste:
         @@ docker container run -ti ubuntu
-        -> Nesse caso, vamos rodar um container com uma
-        imagem do ubuntu latest.
-        -> Assim que rodarmos o comando, teremos acesso
-        a esse container pelo terminal.
-        -> Apretando ctrl+D, matamos o ENTRYPOINT do
-        container.
-        -> Quando matamos o ENTRYPOINT, o ubuntu entende que,
-        não existindo um ENTRYPOINT para o container, pode
-        matar o container.
+            -> Nesse caso, vamos rodar um container com uma
+            imagem do ubuntu latest.
+            -> Assim que rodarmos o comando, teremos acesso
+            a esse container pelo terminal.
+            -> Apretando ctrl+D, matamos o ENTRYPOINT do
+            container.
+            -> Quando matamos o ENTRYPOINT, o ubuntu entende que,
+            não existindo um ENTRYPOINT para o container, pode
+            matar o container.
 
     ENTRYPOINT:
         É o principal processo do container.
@@ -146,27 +146,27 @@ AULA 06:
         
     Comando para teste:
         @@ docker container run -ti nginx
-        -> Caso não tenhamos uma imagem do NGINX ele vai baixar.
-        -> Se já tivermos uma imagem do NGINX, ele só vai executa-la.
-        OBS: O container do NGINX não possui um ENTRYPOINT bash.
-            Só conseguimos acessa-lo através do seu processo
-            TODO PROCESSO QUE ESTÁ EM EXECUÇÃO DENTRO DE UM CONTEINER
-            ELE PRECISA ESTAR EM FOREGROUND, ISTO É, EM PRIMEIRO PLANO!
+            -> Caso não tenhamos uma imagem do NGINX ele vai baixar.
+            -> Se já tivermos uma imagem do NGINX, ele só vai executa-la.
+            OBS: O container do NGINX não possui um ENTRYPOINT bash.
+                Só conseguimos acessa-lo através do seu processo
+                TODO PROCESSO QUE ESTÁ EM EXECUÇÃO DENTRO DE UM CONTEINER
+                ELE PRECISA ESTAR EM FOREGROUND, ISTO É, EM PRIMEIRO PLANO!
 
         @@ docker container run -d nginx
-        -> Nesse caso, estamos indicando que o container com a
-        imagem do nginx vai ser executada como deamon.
-        -> Porém, ainda assim, não conseguimos ter acesso ao ENTRYPOINT
-        bash dele. Pois o nginx não tem.
+            -> Nesse caso, estamos indicando que o container com a
+            imagem do nginx vai ser executada como deamon.
+            -> Porém, ainda assim, não conseguimos ter acesso ao ENTRYPOINT
+            bash dele. Pois o nginx não tem.
 
         Em casos assim, temos que usar um comando EXEC.
         @@ docker container exec -ti <id_container> <comando>
-        -> O exec -ti vai executar um comando via terminal dentro do
-        processo do container escolhido...
-        OBS: Por isso que, no labs, precisavamos usar aquele comando
-        gigantesco "docker compose exec api poetry run ..."
-            -> pois o container que estava rodando nossa aplicação
-            não tinha um ENTRYPOINT bash para acessarmos ele.
+            -> O exec -ti vai executar um comando via terminal dentro do
+            processo do container escolhido...
+            OBS: Por isso que, no labs, precisavamos usar aquele comando
+            gigantesco "docker compose exec api poetry run ..."
+                -> pois o container que estava rodando nossa aplicação
+                não tinha um ENTRYPOINT bash para acessarmos ele.
 
     O QUE É RODAR ALGO COMO DEAMON? USANDO A FLAG -d
         É fazer com que algo não rode no foreground, isto é, em primeiro
@@ -174,4 +174,50 @@ AULA 06:
         Geralmente todos os nossos containeres serão executados
         usando a flag -d. Pois eles não terão necessidade de um ENTRYPOINT
         bash. Dessa forma, não travando o nosso terminal.
+
+=======================================================================================
+=======================================================================================
+
+AULA 07:
+    Para pararmos a execução de um container, usamos o seguinte
+    comando:
+        @@ docker container stop <id_container> OU <nome_container>
+
+    Para iniciarmos a execução de um container, usamos o seguinte
+    comando:
+        @@ docker container start <id_container> OU <nome_container>
+    
+    Para restartarmos um container, usamos o seguinte comando:
+        @@ docker container restart <id_container> OU <nome_container>
+    
+    Para pausarmos a excução de um container, usamos o seguinte comando:
+        @@ docker container pause <id_container> OU <nome_container>
+
+    Para despausarmos um container, usamos o seguinte comando:
+        @@ docker container unpause <id_container> OU <nome_container>
+
+    Para vermos TODAS as informações de um determinado container, 
+    usamos o seguinte comando:
+        @@ docker container inspect <id_container> OU <nome_container>
+            -> Parece que retorna um JSON com diversas informações 
+            sobre o container especificado.
+
+    Para vermos o LOG de um container, usamos o seguinte comando:
+        @@ docker container logs -f <id_container> OU <nome_container>
+            -> A flag -f é de FORCE
+
+    Para matarmos a execução de um container, usamos o seguinte comando:
+        @@ docker container rm <id_container> OU <nome_container>
+            -> Não podemos remover um container que está em execução.
+            A menos que usemos a flag -f.
+    
+    Podemos também remover os containeres que já não estão mais em execução.
+    Isto é, que já foram STOPADOS.
+        @@ docker container ls -a
+            -> veremos todos os containeres que estão ou estiveram em execução
+        @@ docker container rm <id_container>
+            -> vamos remover o container indicado pelo id dele.
+
+=======================================================================================
+=======================================================================================
 
