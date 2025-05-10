@@ -263,6 +263,27 @@ AULA 08:
 =======================================================================================
 =======================================================================================
 
+AULA 09:
+    Para vermos as imagens que utilizamos em nossos containeres, 
+    usamos o seguinte comando:
+        @@ docker image ls
+            -> Ele lista todas as imagens já utilizadas por nossos
+            containeres.
+
+    Para criarmos uma imagem customizada, temos que criar um Dockerfile.
+    Exemplo de Dockerfile nos arquivos.
+        -> Um ponto importante é que, quando colocamos o comando RUN
+        dentro do Dockerfile, esse comando vai ser executado em tempo
+        de BUILD da imagem.
+        -> Quando temos um comando CMD, este só vai ser executado em
+        tempo de execução do container. Isto é, só vai ser executado
+        quando subirmos o container com a imgaem já buildada.
+
+    Para BUILDARMOS uma imagem, temos o seguinte comando:
+        @@ docker image build -t <nome_imagem>
+
+    Para SUBIRMOS o container, temos o seguinte comando:
+        @@ docker container run -d <nome_imagem>
 
 
 =======================================================================================
