@@ -1,0 +1,23 @@
+# Alguns comandos que eu preciso testar vistos no Curso do linuxTips.
+
+1- Criar uma nova pasta para criarmos uma imagem nossa do 0.
+    @@ mkdir <nome_dir>
+    @@ cd <nome_dir>
+    @@ vim Dockerfile
+        -> A ideia do dockerfile é criar uma imagem 
+        "customizada"
+        -> Exemplo de dockerfile no arquivo Dockerfile
+    @@ docker image build -t <nome_imagem>:1.0 .
+        -> Dessa forma, vamos buildar a imagem expecífica
+        -> a FLAG -t indica que vamos colocar uma tag
+        nessa imagem.
+        -> Depois do nome colocamos a versão. (boas praticas)
+    @@ docker container run -d <nome_imagem>
+        -> Depois de buildar a imagem, vamos SUBIR o container
+        com essa imagem.
+    @@ docker container ls
+        -> Para pegarmos o id do container
+    @@ docker container stas <id_container>
+        -> Para vermos as estatísticas do container em execução
+
+    
