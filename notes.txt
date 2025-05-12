@@ -335,3 +335,40 @@ AULA 02:
     
 =======================================================================================
 =======================================================================================
+
+AULA 03:
+    "Na hora de montarmos e subirmos um container, podemos indicar que ele
+    vai ser usado apenas como READ ONLY. Isto é, poderá ser usado apenas
+    para leitura."
+
+    TODO VOLUME DO TIPO VOLUME VAI ESTAR NO SEGUINTE DIRETÓRIO:
+    /var/lib/docker/volumes/...
+        -> ... vai ser o nome do dir que você criou.
+        -> podemos acessa-lo e manipular os arquivos
+
+    @@ docker container run --mount type=bind,src...,dst...,ro nginx
+        -> O 'ro' está indicando que o container será apenas READ ONLY
+
+    Podemos manipular os VOLUMES do tipo VOLUME da seguinte maneira:
+    @@ docker volume ls
+    @@ docker volume create <nome_volume>
+        -> para criarmos um novo volume
+    @@ docker volume inspect <nome_volume>
+        -> para inspecionarmos as informações do volume especifico
+    @@ docker volume rm <nome_volume>
+        -> para deletarmos um volume especifico
+
+    Para subirmos um novo container usando o VOLUME do tipo VOLUME,
+    podemos usar o seguinte comando:
+    @@ docker container run -ti --mount type=volume,src=<nome_volume>,dst=... <nome_imagem>
+        -> O typo de volume agora é volume
+        -> O src vai ser o novo volume que acabamos de criar, não precisamos
+        passar o path completo, apenas o nome já basta.
+        -> o dst vai ser onde ele vai montar dentro do container
+    
+    Podemos ter mais de um container usando o mesmo volume.
+    Na hora de remover o volume, precisamos tomar cuidado com os
+    containeres que estão usando nosso volume.
+
+=======================================================================================
+=======================================================================================

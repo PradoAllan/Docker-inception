@@ -76,5 +76,27 @@
         -> Caso o container caia, basta subir outro usando o mesmo VOLUME
         que não perdermos as informações e dados que tinhamos.
 
+5- Como criar um VOLUME do tipo VOLUME e subir um container com ele:
+    @@ docker volume ls
+        -> para vermos os volumes existentes
+    @@ docker volume create <nome_volume>
+        -> usamos para criar um novo volume com um nome especifico
+    @@ docker volume inspect <nome_volume>
+        -> usamos para inspecionar o volume. Isto é, veremos várias
+        informações sobre aquele volume
+    @@ docker container run -ti --mount type=volume,src=<nome_volume>,dst=<nome_dir> <nome_imagem>
+        -> O ti é apenas para indicar que termos o terminal ativo como
+        ENTRYPOINT
+        -> a FLAG --mount: indica que montaremos o container de uma
+        forma diferente. Isto é, usando um volume, no caso.
+        -> o SRC=: indica qual volume voce quer usar ao subir esse container
+        -> o DST=: indica a pasta que teremos acesso as infos e dados
+        -> por ultimo, o nome da imagem que queremos
+    IMPORTANTE:
+        -> AO RODARMOS O DOCKER CONTAINER RUN COM A FLAG -ti,
+        ESTAMOS APENAS INDICANDO QUE TEREMOS UM TERMINAL COMO 
+        ENTRYPOINT PARA ESTE CONTAINER ESPECIFICO. 
+        -> PODEMOS USAR A FLAG -d PARA RODARMOS ELE EM SEGUNDO
+        PLANO.
 
     
