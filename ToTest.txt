@@ -1,6 +1,6 @@
 # Alguns comandos que eu preciso testar vistos no Curso do linuxTips.
 
-1- Criar uma nova pasta para criarmos uma imagem nossa do 0.
+1- Criar um Dockerfile, isto é, uma imagem customizada de algum serviço:
     @@ mkdir <nome_dir>
     @@ cd <nome_dir>
     @@ vim Dockerfile
@@ -17,7 +17,41 @@
         com essa imagem.
     @@ docker container ls
         -> Para pegarmos o id do container
-    @@ docker container stas <id_container>
+    @@ docker container stats <id_container>
         -> Para vermos as estatísticas do container em execução
+
+2- Como estressar um container que está rodando:
+    @@ docker container run -d <nome_imagem>
+        -> Estamos subindo um container
+    @@ docker container ls
+        -> Veremos qual o id / nome do container que subimos
+    @@ docker container stats <id_container> OU <nome_container>
+        -> Em outro terminal, vamos ver as estatisticas do container
+        que queremos testar.
+    @@ docker container exec -ti <id_container> OU <nome_container> bash
+        -> Vamos acessar o ENTRYPOINT do container especifico.
+        -> Ao acessar esse container estamos "dentro" do espaço
+        ISOLADO daquele container.
+    @@ apt-get update && apt-get install stress
+        -> Instalando o comando stress, que vamos usar para teste
+    @@ stress --help
+    @@ stress --cpu 1 --vm-bytes 128M --vm 1
+        -> Com esse comando, vamos estressar o container.
+        -> Vamos usar 100% da CPU, 128M da memória
+
+3- Como especificar quando de recurso um container vai ter:
+    @@ docker image ls
+        -> Vamos decidir qual imagem vamos usar nesse container
+    @@ docker container run -d --cpus 0.5 -m 128M <nome_imagem>
+        -> COM A FLAG -d: estamos dizendo que esse container rodara em segundo plano
+        -> COM A FLAG --cpus: estamos dizendo que esse container terá 0.5 de uma CPU
+        50%
+        -> COM A FLAG -m: estamos dizendo que esse container terá 128M de memoria 
+    @@ docker container inspect <id_container> OU <nome_container>
+        -> Vamos ver as informaçoes sobre este container especifico.
+        -> Podemos ver quanto de CPU e memoria esse container tem acesso
+    @@ docker container stats <id_container> OU <nome_container>
+        -> Vamos conferir quanto desse recurso o container está consumindo 
+        de fato.
 
     

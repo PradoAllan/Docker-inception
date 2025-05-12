@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y stress && apt-get clean
 // Executar algum comando em tempo de BUILD. Isto é, no momento em que a Imagem
 // estiver sendo construida.
 
-CMD echo "Imagem customizada pelo aprado"
+CMD stress --cpu 1 --vm-bytes 64M --vm 1
 # CMD echo "Iniciando o teste de estresse"
 # CMD stress --cpu 1 --vm-bytes 64M --vm 1
 // Usado para executar alguma coisa, isto é, algum comando. 

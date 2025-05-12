@@ -247,6 +247,9 @@ AULA 08:
         @@ stress *VER DEPOIS*
             -> executar "docker container exec -ti <id_container> bash"
             -> executar "apt-get update && apt-get install -y stress"
+        @@ stress --cpu 1 --vm-bytes 128M --vm 1
+            -> Com esse comando, vamos estressar o container.
+            -> Vamos usar 100% da CPU, 128M da memória
 
     FLAG -m ao rodar uma imagem de NGINX:
         @@ docker container run -d -m 128M nginx
