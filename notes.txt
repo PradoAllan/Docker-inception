@@ -301,7 +301,37 @@ AULA 09:
 =======================================================================================
 
 AULA 02:
+    "Sempre que matamos um container, isto é, ele deixa de estar rodando,
+    nós perdemos todas as informações e dados que ele possuía."
 
+    VOLUMES: "Os volumes são uma forma de persistir os dados dos containeres.
+        Isto é, se um container cair, por qualquer motivo, os dados e 
+        informações contidas nele vão ser armazenadas no VOLUME."
 
+            "Dessa maneira, ao subirmos um novo container com a mesma
+        imagem do container anterior, ele vai usar os dados e informações
+        contidas no VOLUME. Não perdendo, dessa forma, os dados e informações."
+    
+            "BASICAMENTE, é uma forma de colocar um filesystem dentro de um
+        container."
+
+        TEMOS DOIS TIPOS DE VOLUMES:
+            BIND: 
+                    -> É quando temos um diretório que já possui informações e dados
+                    que nós queremos, e a partir dele, queremos subir um novo
+                    container.
+                    -> Então nós já possuimos um diretório e queremos que o novo
+                    container seja montado em cima desse diretório.
+
+                @@ docker container run -ti --mount type=bind,src=/path/dir,dst=/dir <nome_imagem>
+                    -> --mount: FLAG usada para indicar algo na montagem do 
+                            container
+                    -> type=bind: indicando qual o tipo de volume vai ser 
+                            usado na montagem do container
+                    -> ,src=path: indicando qual o diretório que será usado como
+                            base na montagem do container
+                    -> ,dst=dir: onde esse container será montado.
+            VOLUME:
+    
 =======================================================================================
 =======================================================================================

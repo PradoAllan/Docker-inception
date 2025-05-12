@@ -54,4 +54,27 @@
         -> Vamos conferir quanto desse recurso o container está consumindo 
         de fato.
 
+4- Como criar um container que usa um VOLUME do tipo BIND:
+    @@ mkdir /volume/bind
+        -> Aqui vamos criar um dir para servir como base para montarmos
+        um container.
+    @@ docker container run -ti --mount type=bind,src=/opt/testebind,dst=/testebind <nome_imagem>
+        -> Aqui estamos subindo um container que está sendo montado na pasta
+        /testebind e está usando como base o volume /opt/testebind.
+        -> A imagem usada é a <nome_imagem>
+        -> O type é para indicar o tipo de volume que vamos usar na montagem
+        desse container.
+    @@ cd testebind
+    @@ touch teste1
+    @@ exit
+        -> para matarmos o container atual
+    @@ docker container run -ti --mount type=bind,src=/opt/testebind,dst=/testebind <nome_imagem>
+        -> para subir outro container usando o VOLUME BIND anterior
+    @@ cd testebind
+        -> veremos que o teste1 ainda estará lá
+        -> podemos modificar o arquivo, criar outro, apagar.
+        -> Caso o container caia, basta subir outro usando o mesmo VOLUME
+        que não perdermos as informações e dados que tinhamos.
+
+
     
