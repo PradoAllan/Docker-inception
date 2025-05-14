@@ -372,3 +372,40 @@ AULA 03:
 
 =======================================================================================
 =======================================================================================
+
+AULA 04:
+    "Quando montamos e subimos um container usando algum tipo de volume,
+    ele fica especificado no container. Isto é, se dermos inspect nesse
+    container especifico, conseguimos identificar varias informações do
+    volume selecionado na montagem do container."
+
+    @@ docker volume ls
+        -> Para vermos os volumes do tipo volume ja criados e disponiveis.
+    @@ docker volume create <nome_volume>
+        -> Para criarmos um novo volume do tipo volume
+    @@ docker container run -ti --mount type=volume,src=/<nome_volume>,dst=<nome_volume> <nome_imagem>
+        -> Subimos um novo container usando o volume especificado.
+    @@ docker container inspect <nome_container>
+        -> Conseguimos ver várias informações sobre o container,
+        inclusive o volume que foi usado na montagem do container.
+
+    @@ docker volume prune
+        -> Comando usado para apagar todos os volumes que não
+        estão sendo utilizados por pelo menos 1 container.
+    @@ docker container prune
+        -> Comando usado para apagar todos os containeres que não
+        estão rodando.
+        -> Então, ele apaga somente os containers que já não
+        sendo usados. Isto é, os que não estão rodando.
+    
+    @@ docker image prune
+        -> Ele apaga todas as imagens que estão "bagunçadas".
+
+    PRUNE:
+        "Pelo que parece, ele é um comando usado para apagar tudo
+        que não está sendo usado atualmente. Isso vai para os containeres,
+        volumes, images e etc..."
+    
+
+=======================================================================================
+=======================================================================================
