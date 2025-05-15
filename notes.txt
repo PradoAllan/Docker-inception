@@ -405,6 +405,13 @@ AULA 04:
         "Pelo que parece, ele é um comando usado para apagar tudo
         que não está sendo usado atualmente. Isso vai para os containeres,
         volumes, images e etc..."
+
+        "É muito importante tomar cuidado na hora de remover, principalmente
+        os volumes, ao usar o PRUNE. Pois, caso removamos um volume que não
+        está sendo usado no momento, mas contia algum tipo de informação
+        importante, estas informações foram perdidas."
+
+        "O container e/ou as imagens, não tem tanto problema quanto os volumes."
     
 
 =======================================================================================
