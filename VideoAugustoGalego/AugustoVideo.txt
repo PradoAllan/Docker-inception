@@ -1,0 +1,58 @@
+=======================================================================================
+=======================================================================================
+
+Notas sobre o vídeo do Augusto Galego sobre Docker e Containers.
+
+Primeira parte. Isto é, antes dele estudar.
+    Basicamente, para ele, o conceito de Container veio para resolver o problema de
+    "Funciona na minha máquina.". O Container resolve isso usando alguns artefatos:
+    Container, Imgaem, Volumes, Dockerfiles e etc.
+
+    Volumes é a forma que os dados e informações usadas pelo container são armazenadas.
+    Isto é, tudo relacionado a dados e infos, estão, de certa maneira, salvas no volume.
+
+    Dockerfiles é um arquivo que podemos criar do 0 para customizar uma imagem.
+    Essa imagem é a BASE usada para criar um novo container. Então, podemos ter
+    uma imgaem do postgresql. Ao subirmos um container usando essa imagem, significa
+    que teremos um container rodando um banco de dados Postgresql.
+
+    O container é uma forma de isolar um serviço contendo todos os seus recursos
+    necessários para que ele funcione de maneira isolada. O serviço de que estamos
+    falando é a imagem. A Imagem é usada como BASE para montarmos/subirmos um
+    container.
+
+    Então, de maneira resumida, um container é uma unidade isolada que possuí tudo
+    que ele precisa para funcionar "sem depender" de ninguem. Assim como uma VM, ele
+    usa recursos computacionais (Hard e Softwares) do Host onde está rodando.
+
+    COMO TUDO ISSO RESOLVE O PROBLEMA CITADO ACIMA??
+        "Bom, ao criamos um container usando uma Imagem X, que vai possuir recursos
+        e configurações específicas para o serviço que estamos rodando no container,
+        será exatamente o mesmo container que vai rodar no servidor.
+        Então, temos EXATAMENTE o mesmo ambiente rodando tanto na máquina dos devs
+        quanto no servidor. Dessa forma, sempre vai funcionar em ambos."
+
+Segunda parte. Isto é, depois dele estudar.
+    O Container com Docker possui 3 tópicos principais:
+    BUILD (Construir):
+        "É geralmente baseado em uma Dockerfile. Que nada mais é do que uma especificação
+        técnica de tudo que precisamos para rodar aquela imagem. Isto é, a Dockerfile vai
+        descrever como gerar aquela Imagem."
+
+        "Esse Dockerfile é composto por camadas de execução. Então, para cada camada rodar
+        o docker faz uma verificação do HASH para saber se ele precisar buildar novamente,
+        ou se ele pode apenas usar o build já existente. Isto é, que já foi feito."
+
+        "E aí vem a maravilha. A imagem usada para rodar o container na minha casa, vai ser
+        EXATAMENTE a mesma usada para rodar no servidor, ou em outra máquina diferente."
+
+        IMAGENS:
+            "De forma resumida, uma Imagem vai ser um Serviço, que vai rodar, geralmente
+            em um sistema UNIX e que vai rodar em algo que NÃO é uma VM, ela vai rodar em
+            um processo."
+
+    SHIP (Distribuir):
+        ""
+        
+    RUN (Rodar):
+        ""

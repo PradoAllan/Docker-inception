@@ -99,4 +99,25 @@
         -> PODEMOS USAR A FLAG -d PARA RODARMOS ELE EM SEGUNDO
         PLANO.
 
+6- Desafio AULA 05 day 02:
+    Criar um volume
+    @@ docker volume create desafio
+        -> criei um novo volume chamado desafio
+    Subir dois containeres de postgrees usando esse volume criado
+    @@ docker container run -d -p 5432:5432 --name pgsql1 --mount type=volume,src=desafio,dst=/desafio
+    -e POSTGRESQL_USER=docker
+    -e POSTGRESQL_PASS=docker
+    -e POSTGRESQL_DB=docker kamui/postgresql
+        -> Tive problema com essa imagem do postgresql.
+        -> disse que eu preciso ter acesso ao dockerhub para usa-la
+        -> minha solução estava 90% correta. Apenas 1 detalhe errado:
+
+    SOLUÇÃO CORRETA:
+    @@ docker container run -d -p 5432:5432 --name pgsql1 --mount type=volume,src=desafio,dst=/data
+    -e POSTGRESQL_USER=docker
+    -e POSTGRESQL_PASS=docker
+    -e POSTGRESQL_DB=docker kamui/postgresql
+        -> Basicamente, errei apenas no nome da pasta dst=..
+        -> não sei se o meu funcionaria tbm, acretido que não. Mas não pude testar...
+
     
