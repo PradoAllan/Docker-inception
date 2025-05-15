@@ -47,12 +47,38 @@ Segunda parte. Isto é, depois dele estudar.
         EXATAMENTE a mesma usada para rodar no servidor, ou em outra máquina diferente."
 
         IMAGENS:
-            "De forma resumida, uma Imagem vai ser um Serviço, que vai rodar, geralmente
-            em um sistema UNIX e que vai rodar em algo que NÃO é uma VM, ela vai rodar em
-            um processo."
+            "De forma resumida, uma Imagem vai ser um Serviço, isto é, o source code / binário, 
+            que vai rodar, geralmente em um sistema UNIX e que vai rodar em algo que NÃO é 
+            uma VM, ela vai rodar em um processo."
+        
+        CONTAINER:
+            "Vai ser uma instancia de uma IMAGEM."
 
     SHIP (Distribuir):
-        ""
+        "Nada mais é do que uma forma de publicar suas imagens em um local. Isto é, no dockerhub
+        por exemplo. Mas, não necessáriamente você precisa publicar suas imagens. Você pode 
+        criar uma imagem e deixa-la apenas na sua máquina local. Porém, você não conseguirá
+        usa-la em outro local senão na sua própria máquina."
+
+        "Por conta disso, usamos o dockerhub."
         
     RUN (Rodar):
-        ""
+        "Existe um camarada importante para conseguirmos rodar os nossos containeres. Esse cara
+        se chama DOCKER ENGINE. Ele basicamente orquestra todos os passos descritos em um
+        Dockerfile. Isto é, ele que define se vai precisar dar um pull em algum passo, ou 
+        se vai ser usado uma imagem que já esteja em CACHE."
+
+        "Na hora de subir um container, ele vai estar TOTALMENTE ISOLADO. Isto é, todos
+        os seus recursos e tudo que ele precisa para funcionar, vai estar ISOLADO do resto."
+
+        BRIDGE NETWORK:
+            "É a maneira default que possibilita com que os CONTAINERES se comuniquem uns 
+            com os outros. Isso é exetremamente importante, pois visto que eles estão 
+            TOTALMENTE isolados, precisam de algo para se comunicar."
+
+            "Essa comunicação é importante quando temos uma aplicação que precisa de
+            vários containeres para funcionar. Por ex: 1 container com Postgresql, 1 container
+            com o back e 1 container com o front.
+            Esses 3 containeres juntos formam uma aplicação."
+
+            -> É POSSÍVEL CRIAR UMA SUBNETWORK TAMBÉM.
