@@ -427,6 +427,10 @@ AULA 06:
 
 AULA 07:
     "Backup de algum volume ou de algum banco de dados."
+    "Não achei o vídeo muito interessante. Basicamente ele apenas
+    falou sobre backup usando um VOLUME do tipo BIND. Pelo que vi
+    no PDF da inception, não precisa fazer backup de nada. Por conta
+    disso, vou deixar pra outra hora esse tópico de backup."
 
 =======================================================================================
 =======================================================================================
