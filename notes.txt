@@ -435,3 +435,78 @@ AULA 07:
 =======================================================================================
 =======================================================================================
 
+AULA 08:
+    "Muito importante tomar cuidado com as Imagens que já estão publicadas.
+    Isto é, as Imagens que alguem disponibilizou no Dockerhub. Porque existe
+    uma grande chance delas terem algum tipo de problma com CVEs. Ou seja,
+    vulnerabilidades..."
+
+    "Por conta deste problema, o ideal é nós mesmos montemos nossas proprias
+    Imagens customizadas. Fazemos isso usando um arquivo Dockerfile."
+
+    DOCKERFILES.
+        FROM:
+            "Indica qual Imagem vamos nos basear para buildar e 
+            subir esse novo container."
+            ex: 
+                FROM debian
+
+        RUN:
+            "Indica quais comandos serão executados em momento
+            de BUILD. Isto é, comandos que serão executados na
+            hora que estamos BUILDANDO o nosso container novo."
+
+            "Precisamos tomar cuidado com os RUN do Dockerfile.
+            Pois eles funcionam em camadas na hora do BUILD, isto é,
+            mesmo que os comandos sejam executados de maneira correta,
+            uma camada não vai se comunicar com outra camada."
+            ex:
+                RUN apt-get update && apt-get install -y apache2 ...
+                    -> O && indica que vamos executar mais de um comando.
+                    -> O -y indica que vamos dar yes nas opções, pois
+                    não podemos digitar nada na hora do build.
+
+        ENV:
+            "Forma como criamos variáveis de ambiente dentro do nosso
+            container."
+            ex:
+                ENV USER="aprado"
+
+            "IMPORTANTE: Alguns serviços que vamos usar vão precisar de
+            algumas ENVs específicas. Sempre podemos achar essas 
+            informações na documentação do serviço especifico."
+
+        LABEL:
+            "É basicamente uma tag que podemos colocar no container.
+            Pode ser, de certa forma, qualquer coisa no formato KEY=VALUE."
+            ex:
+                LABEL version="1.0"
+
+        VOLUME:
+            "Local onde o docker vai montar um novo volume do tipo volume
+            para o container que está sendo buildado no momento."
+
+            "Sempre que rola um build o docker cria um novo volume para
+            esse novo container. Pelo que eu entendi, esse cara é apenas
+            para indicar o local onde esse volume ficara armazenado."
+            ex:
+                VOLUME /var/www/html/
+
+        EXPOSE:
+            "Estamos dizendo para o docker que a porta 80 estará em
+            exposta."
+
+            "É uma forma mais simples de explicitar para o docker que a 
+            porta 80 precisa ser usada e exposta no container."
+            @@ docker container run -ti -P
+                -> O -P indica que ele vai olhar no Dockerfile se existe 
+                alguma tag EXPOSE.
+                -> Caso exista, ele vai atribuir em alguma porta aleatória do host.
+                O que não é legal.
+            ex:
+                EXPOSE 80
+
+=======================================================================================
+=======================================================================================
+
+
