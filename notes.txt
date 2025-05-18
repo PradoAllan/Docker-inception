@@ -509,4 +509,28 @@ AULA 08:
 =======================================================================================
 =======================================================================================
 
+AULA 09:
+    
+    @@ docker image build -t <nome_imagem> .
+        -> Usamos esse comando para buildar uma imagem e podermos
+        criar uma instancia dela. Isto é, criar um container.
+        -> A FLAG -t é para colocarmos uma TAG nesse build. Deixando
+        mais fácil de identifica-lo.
+    
+    @@ docker container run -ti <nome_imagem>
+        -> Usamos para criar um container, isto é, uma instancia
+        de uma imagem.
 
+    Dentro do DOCKERFILE, não precisamos mais do seguinte comando:
+        RUN ... && apt-get clean
+            -> Basicamente esse comando fazia uma limpa do cache
+            na hora de criar o container.
+            -> Porém, pelos meus testes, não se faz mais necessario.
+
+    OUTRO DETALHE IMPORTANTE, Nesse dockerfile, não estamos rodando o
+    webserver apache. Por conta disso, mesmo que alteremos a porta
+    do container com a flag -p, não conseguiremos acessar o container.
+
+
+=======================================================================================
+=======================================================================================
