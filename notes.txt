@@ -531,6 +531,26 @@ AULA 09:
     webserver apache. Por conta disso, mesmo que alteremos a porta
     do container com a flag -p, não conseguiremos acessar o container.
 
+=======================================================================================
+=======================================================================================
+
+AULA 10:
+        Quando fazemos o build de uma imagem, estamos prontos para 
+    subir e instanciar um novo container usando aquela imagem como
+    base.
+        Quando damos o build em uma Dockefile que usa algo que já temos
+    em cache, o BUILD acaba sendo mais rápido.
+
+    @@ docker image build -t <nome_imagem> .
+        -> Comando usado para buildar uma nova imagem.
+        -> A FLAG -t é para termos um nome para esse build
+    
+    @@ docker image build -t <nome_imagem> . --no-cache
+        -> A FLAG -t é para termos um nome para esse build
+        -> A FLAG --no-cache indica que queremos buildar
+        sem usar a layers que estão no cache.
+
+    
 
 =======================================================================================
 =======================================================================================

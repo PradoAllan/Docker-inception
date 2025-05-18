@@ -120,4 +120,67 @@
         -> Basicamente, errei apenas no nome da pasta dst=..
         -> não sei se o meu funcionaria tbm, acretido que não. Mas não pude testar...
 
+7- Criando um novo DOCKERFILE e BUILDANDO com uma TAG:
+    Basicamente, um Dockerfile é composto por algumas camadas que vão ser responsáveis
+    por criar uma imagem feita por nós. Isto é, podemos fazer toda a configuração da
+    maneira que acharmos melhor.
+    Exemplo de Dockerfile que usa um Webserver apache e roda em cima de um debian:
+        FROM debian
+
+        RUN apt-get update && apt-get install -y apache2 && apt-get clean
+        ENV APACHE_LOCK_DIR="/var/lock"
+        ENV APACHE_PID_FILE="/var/run/apache2.pid"
+        ENV APACHE_RUN_USER="www-data"
+        ENV APACHE_RUN_GROUP="www-data"
+        ENV APACHE_LOG_DIR="/var/log/apache2"
+
+        LABEL description="Webserver"
+
+        VOLUME /var/www/html/
+        EXPOSE 80
+
+        ENTRYPOINT ["/usr/sbin/apachectl"]
+        CMD ["-D", "FOREGROUND"]
+    -> O Dockerfile acima se encontra na pasta dockerfiles.
+
+    Para usar esse Dockerfile como base de um container, precisamos fazer o seguinte:
+
+    @@ docker image build -t <nome_image> .
+        -> Vamos buildar o Dockerfile
+        -> O build vai ter o nome X de acordo com a FLAG -t. 
+        -> O '.' indica que estamos nos referindo ao Dockerfile no repositorio
+        atual
+
+    @@ docker image ls
+        -> Dessa forma vemos que temos uma nova imagem já buildada com o nome
+        <nome_image>
+        -> Agora sempre que quisermos subir um novo container usando essa imagem
+        como base, é só usarmos o <nome_image> como base.
+
+
+8- Subindo um novo CONTAINER e DANDO ACESSO AO HOST pela PORTA do CONTAINER:
+    "Sabemos que, quando criamos um novo container, este é totalmente ISOLADO
+    do host e dos outros containers. Dessa forma, precisamos 'liberar' o 
+    acesso ao container através das portas de rede."
+
+    Para tal, fazemos da seguinte forma:
+    @@ docker container run -d -p 8080:80 <nome_image>
+        -> Dessa forma, estamos subindo um novo container usando uma imagem já buildada
+        -> Estamos dizendo que ela vai rodar em segundo plano "-d"
+        -> Estamos dizendo, também, que o container está mapeando a porta 80 do container
+        para a porta 8080 do host.
+        -> Vale ressaltar que a porta 80 já foi exposta no Dockerfile
     
+    Para acessarmos esse container, acesse:
+        http://localhost:8080/
+            -> localhost é do pc que está hospedando o container.
+            -> 8080 é a porta que está mapeada para o container.
+    
+    OBS: Uma parte importante para termos acesso ao container em execução é: o -d 8080:80
+        -> "Execute a imagem X como um novo container, e mapeie a porta 
+        80 do container para a porta 8080 do meu computador."
+
+    @@ docker container run -d -p 8080:80 --name webserver <nome_imagem>
+        -> Podemos executar com a FLAG --name para darmos um nome ao 
+        container em execução.
+        -> Dessa forma fica mais fácil a identificação do mesmo.
