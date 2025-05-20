@@ -9,6 +9,11 @@ ENV APACHE_RUN_USER="www-data"
 ENV APACHE_RUN_GROUP="www-data"
 ENV APACHE_LOG_DIR="/var/log/apache2"
 
+# COPY index.html /var/www/html/
+# Estamos dizendo que o arquivo index.html, que esta no mesmo
+# diretório do Dockerfile, será copiado para o diretorio
+# /var/www/html/
+
 LABEL description="Webserver"
 
 VOLUME /var/www/html/

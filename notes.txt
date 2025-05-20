@@ -550,7 +550,43 @@ AULA 10:
         -> A FLAG --no-cache indica que queremos buildar
         sem usar a layers que estão no cache.
 
-    
+=======================================================================================
+=======================================================================================
+
+AULA 11:
+    Podemos usar uma TAG dentro do Dockerfile chamada COPY, que vai
+    copiar um arquivo em um diretório X para outro diretório Y.
+
+    Usamos essa TAG para nos auxiliar a importar todos os arquivos
+    necessários para o nosso container rodar da maneira que desejamos.
+
+    Dentro do Dockerfile:
+        FROM debian
+        ...
+        COPY index.html <novo_dir>
+        ...
+
+            -> O arquivo index.html, nesse caso, vai precisar estar
+            no mesmo diretório do Dockerfile.
+
+        Temos a opção de usar a TAG ADD:
+            -> Ela também, assim como o COPY, copia o arquivo específicado
+            para dentro do diretório especificado.
+            -> Mas, se o arquivo estiver compactado, ele joga apenas o 
+            conteúdo já descompactado.
+            -> Ele também consegue pegar um arquivo que esteja na internet.
+
+        Usando a TAG USER:
+            -> Com essa TAG nós estamos dizendo que, na hora do build,
+            vamos mudar o USER que estará executando algo.
+
+        Usando a TAG WORKDIR:
+            -> Essa tag é muito usada pois ela deixa o diretório X
+            como base ao nós acessarmos o container em execução.
+            Isto é, quando acessarmos o container com o seguinte
+            comando:
+                @@ docker container exec -ti <nome_container> bash
+            -> vamos cair direto nesse WORKDIR.
 
 =======================================================================================
 =======================================================================================
