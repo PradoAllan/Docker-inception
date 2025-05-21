@@ -590,3 +590,23 @@ AULA 11:
 
 =======================================================================================
 =======================================================================================
+
+AULA 13:
+    A ideia dessa aula era subir criar um novo Dockerfile usando golang
+    como base.
+
+    Após o build, vamos subir um container usando essa imagem com golang.
+
+    Faremos um arquivo em go para printar "Hello" no terminal.
+
+    Por algum motivo que eu não consegui resolver, não funcionou de maneira
+    nenhuma. Deixei pra lá, pois eu entendi o que deveria acontecer
+    e como chegar nesse resultado. Enfim. Bola pra frente!
+
+=======================================================================================
+=======================================================================================
+
+
+
+=======================================================================================
+=======================================================================================
