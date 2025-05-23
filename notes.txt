@@ -606,7 +606,32 @@ AULA 13:
 =======================================================================================
 =======================================================================================
 
+AULA 14:
+    Conceito de Multi stage build é basicamente um tipo de pipeline com builds.
 
+    Isto é, dentro de um Dockerfile, estamos usando um build já existente
+    para executar algo e pegar esse algo para usar em outra parte do meu
+    build novo.
+
+    É como se fosse assim:
+        Primeira parte do Dockerfile é feito para criar a pizza toda, mas
+        sem assar e deixa-la pronta para consumo.
+
+        A segunda parte é pegar essa massa pronta e por para assar.
+
+        Então, a segunda parte do build, isto é o ÚLTIMO FROM do Dockerfile,
+        apenas pegou o ALGO que foi gerado por um outro build.
+
+    O conceito de multi-stage build (ou "construção em múltiplas etapas") 
+    para containers, especialmente no contexto do Docker, é uma técnica 
+    usada para otimizar a construção de imagens, separando o processo de 
+    build do ambiente de execução final. Ele ajuda a criar imagens menores, 
+    mais seguras e eficientes, contendo apenas o necessário para a aplicação rodar.
+
+    "Use a oficina pesada só para fabricar. Depois, leve apenas o necessário 
+    para o ambiente de produção."
+
+    Assim, você economiza espaço, ganha velocidade e mantém tudo mais seguro.
 
 =======================================================================================
 =======================================================================================
