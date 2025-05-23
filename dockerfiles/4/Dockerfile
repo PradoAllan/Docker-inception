@@ -1,10 +1,10 @@
-# FROM golang
+FROM golang
 
-# WORKDIR /app
-# ADD meu_go.go /app
-# RUN go mod init teste
-# RUN go build -o meugo
-# ENTRYPOINT ./meugo
+WORKDIR /app
+ADD . /app
+RUN go env -w GO111MODULE=off
+RUN go build -o meugo
+ENTRYPOINT ./meugo
 
 # FROM golang
 
@@ -14,10 +14,3 @@
 # RUN go mod tidy
 # RUN go build -o meugo
 # ENTRYPOINT ./meugo
-
-# FROM debian
-
-# WORKDIR /app
-# ADD . /app
-# RUN clang hello.c -o hello
-# ENTRYPOINT ["./hello"]
