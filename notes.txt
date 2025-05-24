@@ -635,3 +635,148 @@ AULA 14:
 
 =======================================================================================
 =======================================================================================
+
+AULA 15:
+    Dentro do Dockerfile, podemos executar um comando RUN. Para que esse
+    comando fique organizado, isto é, não fique tudo na mesma linha,
+    podemos usar o '\'. Dessa forma:
+        RUN apt-get update -y && \
+            yum install -y apache2 \
+            git \
+            java \
+            python
+                -> Dessa forma evitamos da linha ficar gigangtesca
+                apt-get update && ... && ... && ...
+    
+    Dentro de uma IMAGEM devemos colocar APENAS PACOTES NECESSÁRIOS!!!!
+
+    Sempre limpem a CASA com o apt-get clean.
+        -> Hoje em dia não se faz tão necessário mais. O próprio
+        container já limpa por padrão mesmo com o apt-get clean.
+    
+    Reduza o número de camadas.
+    Use o RUN com moderação.
+
+    Use o .Dockerignore
+        -> Funciona da mesma forma que o .gitignore
+        -> Precisa estar no mesmo nível do Dockerfile!!
+    
+    Adicione um NON-ROOT USER.
+
+    ENTENDA:
+        CMD:
+            CMD ["comando 1", "param", "param", ...]    -> Modo EXEC
+            CMD comando1 param param                    -> Modo SHELL
+
+            -> Serve para executarmos comandos.
+        
+        ENTRYPOINT:
+            ENTRYPOINT ["comando 1", "param", ...]
+            ENTRYPOINT comando1 param
+
+            -> É o principal processo dentro da execução do container.
+            -> Usamos ele para executar alguma coisa depois que o container
+            subir.
+
+        Posso usar os dois dentro do mesmo Dockerfile. Porém, caso o faça,
+        o CMD será apenas um PARAMETRO do comando executado no ENTRYPOINT.
+
+            ENTRYPOINT ["comando1"]
+            CMD ["param"]
+                -> Se estou usando os dois, preciso usar o modo EXEC
+
+    CAHCE?
+        @@ docker image build --no-cache -t opa:1.0
+            -> Não vai usar as layers que estão em cahce.
+            -> Isto é, vai buida-las novamente.
+        @@ docker image build -t opa:2.0
+            -> Vai usar as layers que estão em cache.
+            -> Dependendo do caso, pode dar algum problema
+            caso o build usado seja mais antigo por exemplo.
+
+        -> É bom usar mas é preciso tomar cuidado quando usar.
+
+    O CONTAINER É IMUTÁVEL E EFÊMERO:
+        Efêmero significa: "temporário, que pode ser destruído e recriado 
+        a qualquer momento".
+            -> Toda vez que você reinicia um container ele volta ao
+            estado original da imagem, a menos que você monte ele
+            com um volume específico.
+
+        Imutável significa: "não pode ser alterado".
+            -> Dessa forma, uma vez que você suba um container com
+            uma imagem específica, ele vai ser uma instancia dessa imagem.
+            -> A imagem do Docker nao muda. a menos que você mude o
+            Dockerfile. Porém, caso o faça, sera outra imagem.
+            -> Isso gera uma constância. Pois ela SEMPRE será a mesma!
+    
+    PODEMOS CRIAR VARIÁVEIS DE AMBIENTE:
+        ENV USER=aprado
+        ENV APP_DIR=/opt/app
+        WORKDIR ${APP_DIR}
+        ADD . $APP_DIR
+            -> Estamos definindo Variaveis de ambientes e usando-as
+
+    LABELS:
+        LABEL version="1:0"
+        LABEL description="Podemos usar \
+                multi lines."
+
+        -> São atributos CHAVE=VALOR.
+        -> Podemos definir várias coisas usando LABELS
+
+    COPY ou ADD:
+        Eles fazem basicamente as mesmas coisas, porém com alguns
+        detalhes diferentes.
+        COPY:
+            COPY . /opt/app
+            COPY file /dir
+            COPY ../dir/file /opt/app
+                -> Copia arquivos e diretórios para outro lugar.
+            
+            ADD . /opt/app
+            ADD opa.tar /app
+            ADD http://abc.com/file /app
+                -> Copia arquivos e diretórios para outro lugar.
+                -> Faz a descompactação de arquivos compactados .tar/.targz
+                -> Pegar arquivos de lugares remotos, isto é, de links
+                e etc...
+
+    ARGS:
+        FROM debian
+        ARG CONT_IMG_VER
+        ENV CONT_IMG_VER v1.0
+        RUN echo $CONT_IMG_VER
+
+        -> É basicamente uma maneira de pegar argumentos na hora de 
+        buildar uma nova imagem.
+        @@ docker image build --build-arg CONT_IMG_VER=v2.0 Dockerfile 
+            -> Nesse caso, quando buildarmos esse Dockerfile, o
+            ARGUMENTO ARG vai ser o valor que passamos como PARAMETRO
+            na linha de comando.
+
+    HELTHCHECK:
+        HEALTHCHECK --interval=5m --timeout=3s \
+        CMD curl -f http://localhost/ || exit 1
+            -> Aqui ele vai chekcar a "saude" do meu container.
+            -> No intervalo e com timeout especificos.
+
+    MULTI-STAGE:
+        FROM golang:alpine AS buildando
+        ADD . /src
+        RUN cd /src && go build -o opa
+
+        FROM alpine
+        WORKDIR /app
+        COPY --from=buildando /src/opa /app
+        ENTRYPOINT ["./opa"]
+
+        -> Basicamente é uma forma de pegar o resultado de um build
+        e usar em outro build. Algo semelhante a um pipeline.
+
+=======================================================================================
+=======================================================================================
+
+
+=======================================================================================
+=======================================================================================
