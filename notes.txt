@@ -777,6 +777,26 @@ AULA 15:
 =======================================================================================
 =======================================================================================
 
+AULA 16 / 17:
+    Tageando uma imagem
+    @@ docker image tag <id_imagem> OU <nome_imagem> nome_user_dockehub/nome_imagem:version
+        -> A ideia desse comando é conseguirmos jogar as nossa imagens lá
+        para o docker hub.
+    
+    @@ docker push nome_user_dockehub/nome_imagem:version
+        -> Estando logado com o dockerhub, essa é a forma de jogarmos
+        nossa imagem chamada "nome_user_dockehub/nome_imagem:version"
+        lá no dockerhub.
+        -> Isso é basicamente igual ao github.
+
+    @@ docker image rm nome_user_dockehub/nome_imagem:version
+    @@ docker container run -d "nome_user_dockehub/nome_imagem:version"
+        -> Como apagamos a imagem que nós tageamos, não temos
+        ela cacheada nem na nossa máquina mais.
+        -> Dessa forma, precisamos puxar ela lá do dockerhub.
+        -> Ao executarmos o segundo comando acima, o docker vai
+        puxar lá do dockerhub!
+
 
 =======================================================================================
 =======================================================================================
