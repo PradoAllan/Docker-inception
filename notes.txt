@@ -797,6 +797,49 @@ AULA 16 / 17:
         -> Ao executarmos o segundo comando acima, o docker vai
         puxar lá do dockerhub!
 
+=======================================================================================
+=======================================================================================
+
+AULA 18:
+    Basicamente, o Registry é o Github das imagens docker. Isto é, lá é
+    onde podemos pegar e colocar imagens públicas ou privadas para
+    usarmos como build.
+        -> É um repositório online de imagens Docker.
+
+    Então, o Registry é, basicamente, um servidor central de imagens
+    Docker onde podemos:
+        -> Upar / enviar (PUSH) de nossas imagens.
+        -> Pegar / baixar (PULL) de imagens para rodar containeres.
+
+    SIM, O DOCKER HUB É UM REGISTRY!!!
+
+    Usamos ele da seguinte forma:
+        UPLOAD PUSH.
+
+        @@ docker build -t aprado/meuapp:1.0 .
+        @@ docker push aprado/meuapp:1.0
+            -> Dessa estamos buildando nossa imagem
+            -> E upando ela no DockerHub.
+            -> O aprado é o login no DockerHub
+        
+        DOWNLOAD PULL.
+
+        @@ docker pull aprado/meuapp:1.0
+        @@ docker run aprado/meuapp:1.0
+            -> Estamos pegando a imagem X do DockerHub.
+            -> Logo depois, estamos subindo um container
+            usando essa imagem.
+
+    Os REGISTRYS podem ser:
+        Públicos: 
+            qualquer pessoa pode ver e baixar suas imagens 
+            (ex: nginx, redis, etc.).
+        Privados: 
+            apenas usuários autenticados podem acessar 
+            (ótimo para projetos internos ou comerciais).
+
+    Podemos criar um REGISTRY privado, caso necessário.
+        VER OUTRA HORA.
 
 =======================================================================================
 =======================================================================================
