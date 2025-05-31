@@ -1,4 +1,8 @@
 # This is my study notes from a 42 project called Inception.
+# Some important notes about the concpet about container:
+    -> "docker secrets e swarm ce pula com força" by Saiago.
+    -> Pelo que parece, é algo obsoleto.
+    -> Talvez seja interessante para conhecimento apenas.
 
 =======================================================================================
 =======================================================================================
@@ -840,6 +844,66 @@ AULA 18:
 
     Podemos criar um REGISTRY privado, caso necessário.
         VER OUTRA HORA.
+
+=======================================================================================
+                                        DAY 04
+=======================================================================================
+
+AULA 4:
+    Docker compose (Notas baseadas em minhas conversas com o ChatGPT):
+        "O Docker compose é uma forma simplificada de orquestração de containers.
+        Isto é, ele toma conta de todo o ciclo de vida dos containers."
+
+        Basicamente, ele é um MAESTRO de uma orquestra. Ele automatiza a criação, 
+        configuração, e execução de múltiplos contêineres que compõem uma aplicação.
+
+        O que o Compose faz por você:
+            -> Cria contêineres automaticamente com base na definição YAML.
+
+            -> Conecta os contêineres entre si via uma rede interna isolada
+            (sem você precisar criar manualmente).
+
+            -> Configura volumes, variáveis de ambiente, portas, dependências etc.
+
+            -> Gerencia o ciclo de vida dos serviços: subir, parar, reiniciar.
+            Isto é, o ciclo de vida dos containers.
+        
+        Por exemplo:
+            O caso de um APP backend em Node e um BD em Mongo, teriamos 
+            2 serviços diferentes. 
+            Isto é, 2 containers distintos, rodando imagens diferentes e 
+            se comunicando para funcionarem juntos mas de maneira isolada.
+        
+        Isolamento:
+            -> Cada contêiner roda isolado do host e dos outros contêineres 
+            fora dessa rede Compose.
+
+            -> Ainda assim, eles compartilham o ambiente entre si dentro do 
+            escopo do projeto (por exemplo, podem compartilhar um volume 
+            para persistência de dados, ou usar variáveis de ambiente 
+            configuradas no Compose).
+
+    Docker compose (Vídeo LinuxTips):
+        Exemplo de um Docker compose:
+            version: "3.7"                      -> Aqui estamos definindo a versão do compose (sintaxe)
+            services:                           -> Quais serviços/containers que teremos
+            web:                                -> Nome de um serviço/container    
+                image: nginx                    -> Qual imagem que esse container "web" usará
+                deploy:                         -> Uso docker swarm.
+                replicas: 5                     -> Quantidade de réplicas do servico "web"
+                resources:                      -> Recursos para o container
+                    limits:                     -> Limitando esses recursos em
+                    cpus: "0.1"                 -> quantidade max de cpus que esse container terá acesso
+                    memory: 50M                 -> quantidade max de memoria que o container terá acesso
+                restart_policy:                 -> Política de restart. (reinício)
+                    condition: on-failure       -> condição do restart
+                ports:                          -> Configuração das portas usadas pelo host e pelo container
+                - "8080:80"                     -> "8080" do HOST e "80" do container
+                networks:                       -> Conecta o container a rede personalizada chamada "webserver"
+                - webserver                     -> Faz que outros serviços possam se conectar e esse
+            networks:                           -> Definindo uma rede docker personalizada
+            webserver:                          -> Nome da rede docker personalizada
+
 
 =======================================================================================
 =======================================================================================
