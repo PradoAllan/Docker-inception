@@ -883,7 +883,6 @@ AULA 4:
             para persistência de dados, ou usar variáveis de ambiente 
             configuradas no Compose).
 
-    Docker compose (Vídeo LinuxTips):
         Exemplo de um Docker compose:
             version: "3.7"                      -> Aqui estamos definindo a versão do compose (sintaxe)
             services:                           -> Quais serviços/containers que teremos
@@ -904,6 +903,21 @@ AULA 4:
             networks:                           -> Definindo uma rede docker personalizada
             webserver:                          -> Nome da rede docker personalizada
 
-
+    Docker compose (Vídeo LinuxTips):
+        Para fazermos o deploy do nosso docker compose, podemos rodar
+        o seguinte comando:
+            @@ docker stack deploy -c docker-compose.yaml <nome_stack>
+                -> Estmos deployando nossa stack descita no docker compose
+                -> A FLAG -c indica que estamos usando o arquivo docker-compose.yaml
+            
+        Se não funcionar de primeira, provavelmente é o fato de não termos dado o
+        init no swarm.
+            @@ docker swarm init
+        
+        Para removermos essa nova stack, usamos o comando:
+            @@ docker stack rm <nome_stack>
+                -> Ele vai remover todos os servicos / containeres
+                presentes nessa stack.
+                
 =======================================================================================
 =======================================================================================
