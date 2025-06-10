@@ -921,3 +921,61 @@ AULA 4:
                 
 =======================================================================================
 =======================================================================================
+
+AULA 5:
+    DIFERENÇA ENTRE DOCKERFILE E DOCKER COMPOSE:
+        - Dockerfile (FOCO na construção de imagens):
+            "É a forma como descrevemos e criamos uma nova imagem customizada
+            a partir das nossas necessidades. Isto é, ao invés de usarmos uma
+            imagem já pronta, estamos CRIANDO uma."
+
+            "Ele é um arquivo de instruções usado para criar uma imagem docker
+            personalizada."
+
+            "Nele definimos passo a passo tudo que essa imagem precisa para
+            funcionar. Isto é, base, bibliotecas, variáveis de ambiente,
+            comandos a serem executados, arquivos de projeto e etc."
+
+        - Docker compose (FOCO no gerenciamento e na orquestração de containers):
+            "Ele é o orquestrador dos containers de uma aplicação. Isto é, ele
+            apenas cuida de todo o ciclo de vida dos containers dessa aplicação
+            e de suas necessidades de funcionamento."
+
+            "É uma ferramenta para definir e executar múltiplos containers Docker
+            de forma fácil, usando um docker-compose.yaml"
+
+            "Ideal para orquestrar aplicações multi-containers. Isto é, com vários
+            containers/serviços."
+
+    STACK:
+        Ele é uma REUINIÃO de vários SERVICES. Isto é, 1 ou mais SERVICES.
+        Um SERVICE é um conjunto de containers. Isto é, 1 ou mais CONTAINERS.
+        
+        Exemplo de um docker-compose.yml com uma Stack:
+            version: "3.7"                              -> Versão do compose.
+            services:                                   -> Indicando quais services teremos
+            db:                                         -> Nome do service
+                image: mysql:5.7                        -> Imagem usada nesse service
+                volumes:                                -> Indica que vai usar um volume
+                - db_data:/var/lib/mysql                -> Nome do volume : Onde vai ser montado (path)
+                environment:                            -> Variáveis de ambiente
+                MYSQL_ROOT_PASSWORD: somewordpress          - Na documentação da imagem vai ter
+                MYSQL_DATABASE: wordpress                   Explicado quais ENVS precisa.
+                MYSQL_USER: wordpress
+                MYSQL_PASSWORD: wordpress
+                
+            wordpress:                                  -> Nome do service
+                depends_on:                             -> Informa que esse service precisa de algo para subir
+                - db                                    -> Diz que ele precisa do outro service db para subir
+                image: wordpress:latest                 -> Imagem usada nesse service
+                ports:                                  -> Portas
+                - "8000:80"                             -> Abrindo a 8000 do host para a 80 do container
+                environment:                            -> Variáveis de ambiente
+                WORDPRESS_DB_HOST: db:3306              -> Indica que vai se comunicar com o db na porta 3306
+                WORDPRESS_DB_USER: wordpress
+                WORDPRESS_DB_PASSWORD: wordpress
+            volumes:                                    -> Especificando o volume X para que ele seja criado
+                db_data:                                -> Definindo o db_data
+
+=======================================================================================
+=======================================================================================
