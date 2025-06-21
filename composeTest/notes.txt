@@ -1,0 +1,78 @@
+############################################################################
+                                DOCKERFILE
+############################################################################
+
+FROM python:3.10-alpine
+    -> Estamos dizendo que essa nova imagem usará, como base, o python:3.10 alpine.
+    Que é uma versão minimalista e segura do python usando o alpine-linux.
+
+WORKDIR /code
+    -> Informa que o diretório onde nosso container vai ser "executado"
+    isto é, onde vai ser executado todos os outros comandos.
+    -> Em termos gerais, onde vai ser o diretório de trabalho do container.
+
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+    -> Duas variáveis de ambiente que, provavelmente, o flask usa.
+    -> A segunda, indica que o flask escutará todas as interfaces de rede.
+    Que é importante para ele escutar fora do container.
+
+RUN apk add --no-cache gcc musl-dev linux-headers
+    -> Instala pacotes necessários para que o python rode de forma correta.
+    Isto é, pacotes python que dependem de C/C++.
+
+COPY requirements.txt requirements.txt
+    -> Copia o arquivo requirements.txt do host para dentro do diretório /code
+    do container.
+    -> Copia para o diretório /code pois foi definido anteriormente com o WORKDIR.
+
+RUN pip install -r requirements.txt
+    -> Instala as dependencias que o container vai precisar para funcionar.
+
+EXPOSE 5000
+    -> Informa que o container escutará na porta 5000 dele.
+    -> É apenas uma instrução declarativa, com fins de documentação.
+    -> Só vai ser exposta na hora do build da imagem. Seja com o Docker-compose
+    ou Kubernets.
+
+COPY . .
+    -> Copia TODOS os arquivos do diretório atual do HOST para o diretório
+    /code do container.
+
+CMD ["flask", "run", "--debug"]
+    -> Comando padrão que será executado toda vez que o container subir.
+    -> No caso, executa o app flask em modo debug. (não indicado para prod)
+
+############################################################################
+                                DOCKER COMPOSE
+############################################################################
+
+services:
+    -> Onde definimos os servicos (containers) que teremos na nossa aplicacao.
+
+  web:
+    -> Primeiro, teremos um servico web.
+    build: .
+        -> O build dele será feito através de um DOCKERFILE que está presente dentro do
+        diretório atual.
+
+    ports:
+      - "8000:5000"
+        -> Estamos dizendo que o container que rodará o servico web vai expor a porta
+        5000 dele para a porta 8000 do host.
+        -> Então, o HOST conseguirá acessar o container com o servico através da porta
+        8000 dele.
+        -> Indicamos isso dentro do DOCKERFILE no expose. Mas não é obrigatório...
+  
+  redis:
+    -> Segundo servico que teremos nessa nossa aplicacao. Chamado Redis.
+    image: "redis:alpine"
+        -> Estamos dizendo que ele vai usar uma imagem alpine do redis.
+        -> Que é uma imagem já existente. Provavelmente disponivel no docker hub.
+        -> Mas podemos ter um Registry dessa imagem lá tbm. 
+
+    -> Como esse servico redis não expoe suas portas (do container) para fora. 
+    isto é, para o host, ele estará apenas liberado para a rede interna do Docker
+    compose.
+    -> Então, só conseguimos acessar esse servico a partir da rede interna do 
+    docker compose.
