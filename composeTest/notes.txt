@@ -76,3 +76,107 @@ services:
     compose.
     -> Então, só conseguimos acessar esse servico a partir da rede interna do 
     docker compose.
+
+############################################################################
+                                COMMANDS
+############################################################################
+
+Após criamos o nosso docker compose, podemos executá-lo usando o seguinte
+comando:
+    @@ docker compose up
+        -> Ao digitarmos esse comando dentro do dir onde o docker-compose.yaml
+        se encontra, o orquestrador COMPOSE vai fazer todo o trabalho para nós.
+        -> Ele vai buildar o que for preciso
+        -> Baixar as imagens necessárias
+        -> Criar todos os volumes
+        -> Fazer toda a configuração da NETWORK
+        -> Expor todas as portas do container
+        -> De forma geral, ele vai deixar tudo pronto para uso!
+
+Uma vez noo ar, podemos encerrar nossa STACK (aplicação) de duas formas:
+    @@ docker compose down
+        -> Em outro terminal, digitamos o comando acima.
+        -> Ele vai "desligar" os serviços
+
+    @@ CTRL + C
+        -> No terminal onde o serviço está rodando
+        -> Estamos "Matando" o processo específico
+
+Podemos rodar o docker compose up com a flag de DETACH, isto é, Para
+rodar em "Segundo plano":
+    @@ docker compose up -d
+        -> Vai rodar o arquivo compose.yaml do dir atual
+        -> Vai subir os servicos necessários
+        -> E vai subir em "segundo plano", isto é, em detach mode
+
+############################################################################
+                                COMPOSE WATCH
+############################################################################
+
+...
+  web:
+    build: .
+    ports:
+      - "8000:5000"
+    develop:
+      watch:                    -> Compose Watch
+        - action: sync          -> Dizendo que ele vai sincronizar
+          path: .               -> Qual caminho do HOST ele vai monitorar
+          target: /code         -> Dir final dos arquivos modificados
+...
+
+O Develop.watch (compose watch) no Docker compose:
+    -> Funciona como um monitor de arquivos
+    -> Fica observando uma ou mais pastas
+    -> Ao detectar que algum arquivo foi modificado, ele:
+        -> Sincroniaza a nova versão automaticamente com o container
+        -> Não reinicia o container
+        -> Sem rebuild
+        -> Sem "docker compose down" e "up"
+        -> De forma rápida e leve
+    
+Isso é ótimo pois permite que possamos modificar um arquivo, no host,
+e ver a modificação automaticamente no nosso container. Isto tudo
+sem prerder tempo dando rebuild no serviço!
+
+############################################################################
+                                INCLUDE
+############################################################################
+
+Em aplicações grandes, ter apenas um arquivo COMPOSE pode dificultar o
+entendimento/manutenção dos containers/services. Para diminuir essa
+dificuldade podemos segregar, isto é, dividir, nossa aplicação em mais
+de um arquivo .yaml. Facilitando, assim, a manutenção do mesmo.
+
+Para fazermos isso, precisamos de uma forma para compilar todos services/
+containers após essa divisão. A forma que fazemos isso é através do
+"include" dentro de um compose.yaml que vai compilar tudo.
+
+Por ex:
+    Se temos um compose.yaml que possui dois serivces, podemos dividir
+    um deles em outro arquivo e inclui-lo no compose.yaml.
+
+    Arquivo infra.yaml:
+        redis:
+        image: "redis:alpine"
+    -> Aqui temos um service em outro arquivo.
+
+    Arquivo compose.yaml:
+        include:
+        - infra.yaml
+            -> Incluindo o outro service declarado em outro arquivo .yaml
+
+        services:
+        web:
+            build: .
+            ports:
+            - "8000:5000"
+            develop:
+            watch:
+                - action: sync
+                path: .
+                target: /code
+    -> Aqui temos o compose.yaml "Base". Que será usado na hora de subir
+    a aplicação.
+    -> Nele, apenas incluimos o outro service necessário para a nossa
+    aplicação.
