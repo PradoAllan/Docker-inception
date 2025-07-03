@@ -1,0 +1,93 @@
+##########################################################################################
+                                        NGINX
+##########################################################################################
+O QUE É?
+    É um software para servidor web de código aberto conhecido pelo seu alto
+    desempenho e baixo uso de recursos. É muito usado para carregar conteúdo
+    estático e é muito usado como load balancer (balanceador de carga) e proxy
+    reverso.
+
+O QUE ELE PODE FAZER?
+    -> Servidor Web: "Serve arquivos estáticos como HTML, CSS, JS, imagens e etc."
+    -> Proxy Reverso: "Recebe requisições HTTP e as encaminha para outro servidor.
+            Isto é, redireciona a requisição recebida para outro servidor. Ex:
+            uma API em Flask, Node e etc."
+    -> Balanceador de carga: "Distribui requisições entre vários servidores para
+            melhorar o desempenho e disponibilidade da aplicação."
+    -> Cache de conteúdo: "Armazena temporariamente conteúdo para reduzir caraga
+            no backend e acelerar respostas. Isto é, também serve como um cache."
+    -> SSL/TLS: "Gerencia conexões seguras HTTPS com certificados."
+    -> GZIP: "Compacta respostas HTTP, reduzindo o tempo de carregamento."
+
+POR QUE USAR?
+    -> Consome pouco recurso.
+    -> Suporta milhares de conexões simultâneas com baixo uso de recursos.
+    -> Excelente para ser usado como Front-ed de aplicações Web que rodam em Backends
+        mais pesados.
+    -> Configuração relativamente simples (usando arquivos .conf).
+
+TLS (Transport Layer Security):
+    São protocolos criptográficos projetados para fornecer segurança nas comunicações
+    de rede. Isto é, protocolo que garante a criptografia, integridade e autenticidade
+    da comunicação em redes (HTTPS por ex).
+        Sucessor do SSL.
+        HTTPS é o HTTP rodando sobre o TLS.
+    Sua última versão é o TLSv1.3.
+
+MEU RESUMO SOBRE O NGINX:
+    O NGINX é um web server que é muito usado para hospedar o frontend de aplicações web,
+    pois ele é super útil para carregar arquivos estáticos.
+    Além disso, serve para várias outras coisas como: load balancer, proxy reverso e etc.
+
+    Ele, basicamente, vai ser o principal servidor que os clientes acessarão e ele vai
+    redirecionar a requisição para o servidor (da aplicação) que está estipulado para
+    atender tal requisição.
+
+    De maneira resumida, ele atua como um mediador entre cliente e aplicação.
+    Sendo responsável por  receber a requisição e redirecionar para o servidor
+    específico, a partir do seu arquvio de configuração "file.conf".
+
+    [Cliente HTTP] --> [NGINX] --> [Backend: Flask ou Node]
+                          \
+                           --> [Frontend: arquivos estáticos]
+
+EXPOSE 80 ou 443?
+    Ambas estão corretas. A porta 80 é a padrao do NGINX. Enquanto a 443 é a padrão para
+    o uso do TLS.
+
+    Podemos expor ambas em nossa aplicação. Porém, pelo que vi, é recomendado expor apenas
+    a 443, pois toda comunicação será feita usando o protocolo HTTPS, garantindo assim,
+    a confidencialidade, integridade e autenticidade dos dados.
+
+    No caso da 80, geralmente é usada para ambiente de desenvolvimento. Nunca em Produção.
+    Pois não é segura.
+
+QUANDO USAR CADA UMA?
+    443 (HTTPS) quando:
+        -> Estiver lidando com dados sensíveis.
+        -> Quer proteger contra ataques de man-in-the-middle.
+        -> Quer garantir a autenticidade e integridade da informação.
+    80 (HTTP) quando:
+        -> Para redirecionar automaticamente para HTTPS.
+        -> Em ambientes internos ou de teste/localhost (sem dados sensíveis).
+        -> Quando TLS não está disponível.
+
+QUANDO USAR O OPENSSL?
+    O openssl, no nosso caso, vai ser usado para gerar o certificado necessário para o
+    uso do TLS. Caso já tenhamos o certificado, não é necessário usar o openssl.
+    Mas, se for necessário criar o certificado dentro do nosso container, é preciso instalar
+    o openssl na imagem.
+
+    Resumindo: 
+        -> Não precisa do openssl no Dockerfile se já tivermos os arquivos de certificado
+            (.crt) e chave (.key) prontos e pretende apenas copiá-los para o container.
+        -> O NGINX usa os arquivos prontos e os referencia no .conf.
+
+
+
+Bom link de guia para habilitar o TLSv1.2 e TLSv1.3:
+https://www.cyberciti.biz/faq/configure-nginx-to-use-only-tls-1-2-and-1-3/
+https://nginx.org/en/docs/http/configuring_https_servers.html
+
+
+Service do NGINX:

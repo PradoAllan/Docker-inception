@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
-RUN apt-get update && apt-get install -y nginx && apt-get clean
+RUN apt-get update && apt-get install -y nginx openssl && apt-get clean
 
-EXPOSE 80
+EXPOSE 443
 
 CMD ["nginx", "-g", "deamon off"]
