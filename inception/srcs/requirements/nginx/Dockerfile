@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y nginx openssl && apt-get clean
 # 		-out /etc/nginx/cert.crt -keyout /etc/nginx/key.key \
 # 		-subj "/C=BR/ST=RioDeJaneiro/L=RioDeJaneiro/O=42/OU=42/CN=aprado.42.rio/UID=aprado"
 
-COPY cert.crt /etc/nginx/cert.crt
-COPY key.key /etc/nginx/key.key
+COPY cert.crt /etc/nginx/ssl/cert.crt
+COPY key.key /etc/nginx/ssl/key.key
 COPY ./conf/nginx.conf /etc/nginx/conf.d/server.conf
 
 EXPOSE 443
