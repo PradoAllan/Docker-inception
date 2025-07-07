@@ -9,3 +9,9 @@ services:
     ports:
       - 443:443
       # - 8080:80
+  
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+      dockerfile: Dockerfile

@@ -155,3 +155,12 @@ POSSÍVEIS PROBLEMAS NO SERVIÇO DO NGINX:
 
 
 Service do NGINX:
+
+
+##########################################################################################
+                                        ENVIRONMENT VARIABLES
+##########################################################################################
+Bom link:
+https://docs.docker.com/compose/how-tos/environment-variables/best-practices/
+
+
