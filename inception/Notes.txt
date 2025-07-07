@@ -109,5 +109,49 @@ Bom link de guia para habilitar o TLSv1.2 e TLSv1.3:
 https://www.cyberciti.biz/faq/configure-nginx-to-use-only-tls-1-2-and-1-3/
 https://nginx.org/en/docs/http/configuring_https_servers.html
 
+POSSÍVEIS PROBLEMAS NO SERVIÇO DO NGINX:
+-> Local do arquivo de configuração .conf:
+    Pelo que parece, o nome do arquivo, de maneira geral, precisa ser nginx.conf, eu estou colocando como
+    server.conf.
+
+    Para ser sincero, não acho que esse seja o problema. Visto que eu ja subi esse servico e tomei alguns
+    erros de configuração com o arquivo nomeado server.conf.
+
+-> Estrutura do arquivo de configuração .conf:
+    É importante que esse arvuivo tenha sua estrutura completa e com todas as suas seções.
+        events {}
+
+        http {
+            server {
+                listen 443 ssl;
+                listen [::]:443 ssl;
+
+                server_name localhost;
+
+                ssl_protocols TLSv1.2 TLSv1.3;
+                ssl_certificate /etc/nginx/ssl/cert.crt;
+                ssl_certificate_key /etc/nginx/ssl/key.key;
+
+                location / {
+                    root /usr/share/nginx/html;
+                    index index.html;
+                }
+            }
+        }
+    
+    Novamente, não acho que esse seja o problema. Talvez esteja faltando o location dentro do meu.
+    Mas, posso testar isso depois.
+
+-> Diretiva ssl on; é obsoleta:
+    Vou retirar. Mas isso não deve ser o causador do problema.
+
+-> Verificar se a pasta contendo o conteúdo HTML, de fato, existe:
+    Vou testar isso depois fazendo um entrypoint para o container. Mas, novamente, não acho que
+    esse seja o problema.
+
+-> Verificar os logs de erro:
+    docker logs nginx
+
+
 
 Service do NGINX:
