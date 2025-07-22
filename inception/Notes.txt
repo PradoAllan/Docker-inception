@@ -158,9 +158,87 @@ Service do NGINX:
 
 
 ##########################################################################################
-                                        ENVIRONMENT VARIABLES
+                                    ENVIRONMENT VARIABLES
 ##########################################################################################
 Bom link:
 https://docs.docker.com/compose/how-tos/environment-variables/best-practices/
 
 
+##########################################################################################
+                                    WORDPRESS
+##########################################################################################
+
+WORDPRESS:
+    É um sistema de gerenciamento de conteúdo (CMS - Content Management System)
+    gratuito e de código aberto. Foi criado inicialmente para blogs, mas hoje em dia,
+    é uma das plataformas para criação de sites, lojas virtuais, portais, etc
+    mais usada no mundo.
+
+    Principais características:
+        -> Open source
+        -> Baseado em PHP e MySQL
+        -> Painel administrativo intuitivo. Isto é, não precisa saber programar para usar
+        -> Sistema de temas e plugins
+        -> Comunidade enorme
+
+PHP-FPM (FastCGI Process Manager):
+    Ele é usado para processar scripts PHP fora do processo principal do servidor
+    web, com mais controle, desempenho e segurança. Dessa forma, o conteúdo devolvido
+    ao usuário é dinâmico. Isto é, permite que um outro processo gere o conteúdo
+    a partir da necessidade e o devolva como resposta.
+
+    Relação do WP com PHP-FPM:
+        -> O WORDPRESS é feito em PHP
+        -> Quando um usuário acessa uma página no WORDPRESS, o servidor web (geralmente
+            NGINX ou APACHE) precisa interpretar o código PHP da aplicação.
+        -> Em vez de processar isso diretamente, o servidor web envia a requisição para o
+            PHP-FPM que, por sua vez, executa o script PHP e devolve o HTML gerado.
+        -> O servidor Web entrega esse HTML ao navegador do usuário
+        -> Ele usa processos já carregados. Deixando assim, mais rápido
+
+CGI (Common Gateway Interface) em PT-BR "Interface comum de entrada/saida":
+    Ele é um padrão de comunicação entre um servidor web e um programa externo
+    que gera conteúdo dinâmico.
+
+    Basicamente, quando o servidor web identificar que o caminho acessado pelo usuário
+    é um arquivo executável, ele vai:
+        -> Executar o script (php, no meu caso) no sistema operacional como um
+            processo.
+        -> O script vai gerar uma saída, geralmente um HTML.
+        -> O servidor web pega essa saída e retorna para o usuário.
+
+    Dessa forma, o CGI permite que o servidor web execute programas e envie o resultado
+    como resposta ao cliente. Dizemos que essa forma gera conteúdo dinâmico pois
+    a resposta pode sempre mudar, diferentemente de um conteúdo estatico (que nunca muda).
+
+MEU ENTENDIMENTO:
+    O CGI é uma espécie de ponte entre o servidor web e o conteúdo dinâmico que precisa
+    ser devolvido para o client. Esse conteúdo dinâmico é gerado através de um script, 
+    no meu caso, usando php.
+    Esse script vai gerar um conteúdo HTML como resposta à requisição que o cliente fez 
+    ao servidor web.
+
+    Em caso de blogs, isso é importante pois, em caso de nova postagem, um conteúdo 
+    estático do servidor web não conseguiria pegar a nova postagem. 
+    Por conta disso, podemos usar um CGI para gerar esse novo conteúdo HTML e devolve-lo 
+    para o client. Visto que, o script vai ter acesso ao banco de dados e, automaticamente, 
+    à nova postagem.
+
+REFINAMENTO DO ENTENDIMENTO:
+    O CGI permite que o servidor web execute um script externo para gerar conteúdo sob
+    demanda, em vez de apenas servir arquivos estáticos com HTML ou imagens.
+
+    No contexto de WORDPRESS ou outras aplicações, o script PHP é chamado a cada requisição.
+    Ele processa a lógica, consulta o Banco de Dados e retorna o HTML para o navegador.
+
+    O Servidor web executa o script, pega a saída padrão (stdout) do processo e devolve
+    essa saída como resposta HTTP.
+
+    Como um HTML estático não muda a menos que a gente o mude, o CGI é bom por conta disso.
+
+    Com CGI (php-fpm no caso), o script acessa o banco de dados, onde a nova postagem do blog
+    foi gravada, e gera dinamicamente a página com a postagem incluída - tudo no momento 
+    da requisição.
+
+    A lógica fica da seguinte maneira:
+        CLIENTE(REQUEST) --> SERVIDOR WEB --> SCRIPT PHP --> HTML --> CLIENTE(RESPONSE)
