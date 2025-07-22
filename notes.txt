@@ -4,6 +4,13 @@
     -> Pelo que parece, é algo obsoleto.
     -> Talvez seja interessante para conhecimento apenas.
 
+Boa playlist youtube com vídeos sobre DevOps:
+https://www.youtube.com/playlist?list=PLxYCgfC5WpnsAg5LddfjlidAHJNqRUN14
+
+Bons materiais da playlist:
+https://github.com/MansoorMajeed/devops-from-scratch/blob/master/episodes/0-roadmap.md
+
+
 =======================================================================================
 =======================================================================================
                                         DAY 01
