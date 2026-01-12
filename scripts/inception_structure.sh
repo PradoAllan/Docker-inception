@@ -28,6 +28,9 @@ touch ./srcs/requirements/nginx/conf/default.conf
 
 # Criar arquivos em ./srcs/requirements/wordpress
 touch ./srcs/requirements/wordpress/Dockerfile ./srcs/requirements/wordpress/.dockerignore
+# Criar arquivos necessarios para o wordpress (www.conf e wp-cli_script.sh)
+touch ./srcs/requirements/wordpress/conf/www.conf ./srcs/requirements/wordpress/tools/wp-cli_script.sh
+
 
 # Criar arquivos em ./secrets
 touch ./secrets/db_root_password.txt ./secrets/wp_admin_password.txt ./secrets/wp_db_password.txt ./secrets/wp_user2_password.txt
