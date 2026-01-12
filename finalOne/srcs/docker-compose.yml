@@ -31,6 +31,7 @@ services:
         condition: service_started
     volumes:
       - wordpress_data:/var/www/html
+      - ../secrets:/run/secrets:ro
     environment:
       - SERVER_NAME=${SERVER_NAME}
       - WP_URL=${WP_URL}
@@ -46,10 +47,6 @@ services:
       - WP_USER2_PASSWORD_FILE=/run/secrets/wp_user2_password
       - WP_USER2_EMAIL=${WP_USER2_EMAIL}
       - WP_USER2_ROLE=${WP_USER2_ROLE}
-    secrets:
-      - wp_db_password
-      - wp_admin_password
-      - wp_user2_password
     networks:
       - inception
     restart: always
@@ -60,14 +57,12 @@ services:
     container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
+      - ../secrets:/run/secrets:ro
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD_FILE=/run/secrets/wp_db_password
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
-    secrets:
-      - wp_db_password
-      - db_root_password
     networks:
       - inception
     restart: always
@@ -89,13 +84,3 @@ volumes:
       type: none
       o: bind
       device: /home/aprado/data/mariadb
-
-secrets:
-  wp_db_password:
-    file: ../secrets/wp_db_password.txt
-  db_root_password:
-    file: ../secrets/db_root_password.txt
-  wp_admin_password:
-    file: ../secrets/wp_admin_password.txt
-  wp_user2_password:
-    file: ../secrets/wp_user2_password.txt
