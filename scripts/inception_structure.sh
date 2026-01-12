@@ -19,10 +19,12 @@ touch ./srcs/docker-compose.yml ./srcs/.env
 # Criar arquivos em ./srcs/requirements/mariadb
 touch ./srcs/requirements/mariadb/Dockerfile ./srcs/requirements/mariadb/.dockerignore
 # Criar os arquivos de configuração, scripts do mariadb e init do sql
-touch ./srcs/requirements/mariadb/conf/50-server.cnf ./srcs/requirements/mariadb/tools/init.sql ./srcs/requirements/mariadb/tools/mariadb_script.sh
+touch ./srcs/requirements/mariadb/conf/50-server.cnf ./srcs/requirements/mariadb/tools/mariadb_script.sh
 
 # Criar arquivos em ./srcs/requirements/nginx
 touch ./srcs/requirements/nginx/Dockerfile ./srcs/requirements/nginx/.dockerignore
+# Criar arquivo de configuração do NGINX (default.conf)
+touch ./srcs/requirements/nginx/conf/default.conf
 
 # Criar arquivos em ./srcs/requirements/wordpress
 touch ./srcs/requirements/wordpress/Dockerfile ./srcs/requirements/wordpress/.dockerignore
