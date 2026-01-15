@@ -39,12 +39,12 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
-      - DB_PASSWORD_FILE=/run/secrets/wp_db_password
+      - DB_PASSWORD_FILE=/run/secrets/wp_db_password.txt
       - WP_ADMIN_USER=${WP_ADMIN_USER}
-      - WP_ADMIN_PASSWORD_FILE=/run/secrets/wp_admin_password
+      - WP_ADMIN_PASSWORD_FILE=/run/secrets/wp_admin_password.txt
       - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
       - WP_USER2=${WP_USER2}
-      - WP_USER2_PASSWORD_FILE=/run/secrets/wp_user2_password
+      - WP_USER2_PASSWORD_FILE=/run/secrets/wp_user2_password.txt
       - WP_USER2_EMAIL=${WP_USER2_EMAIL}
       - WP_USER2_ROLE=${WP_USER2_ROLE}
     networks:
@@ -61,8 +61,8 @@ services:
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD_FILE=/run/secrets/wp_db_password
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MYSQL_PASSWORD_FILE=/run/secrets/wp_db_password.txt
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password.txt
     networks:
       - inception
     restart: always
